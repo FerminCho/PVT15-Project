@@ -1,3 +1,3 @@
-enum VehicleTypes {
+enum VehicleType {
   OTHER, PICKUP, SPORT, TRUCK 
 }

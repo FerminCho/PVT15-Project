@@ -1,5 +1,5 @@
 class VehicleBrand {
-  String name = "";
+  String name = "[no namw]";
 
   VehicleBrand (String name) {
     this.name = name;
