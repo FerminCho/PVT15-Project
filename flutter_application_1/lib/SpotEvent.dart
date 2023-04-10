@@ -6,8 +6,8 @@ import 'User.dart';
 import 'Location.dart';
 
 class SpotEvent {
-  User user = new User("[no name]", "[no email]");
-  Vehicle vehicle = new Vehicle("[no ID]");
+  User user = User("[no name]", "[no email]");
+  Vehicle vehicle =  Vehicle("[no ID]", );
   DateTime timeStamp = DateTime(0); // <-- felimplementerat
   Location location = Location(0, 0);
 
