@@ -11,12 +11,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late GoogleMapController mapController;
-
+  final Map<String, Marker> _markers = {};
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    var positions =  [1];
+    var latlang = [59.334591, 18.063240];
+    setState(() {
+      _markers.clear();
+      for (var i in positions) {
+        final marker = Marker(
+          markerId: MarkerId(i.toString()),
+          position: LatLng(latlang[0], latlang[1]),
+          /*infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),*/
+        );
+        _markers[i.toString()] = marker;
+      }
+    });
   }
 
   @override
@@ -37,6 +51,11 @@ class _MyAppState extends State<MyApp> {
             target: _center,
             zoom: 11.0,
           ),
+          markers: _markers.values.toSet(),
+          cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+          northeast: const LatLng(59.448099, 18.179115),
+          southwest: const LatLng(59.218005, 17.742408)
+          ))
         ),
       ),
     );
