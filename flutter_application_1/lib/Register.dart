@@ -4,14 +4,15 @@ import 'package:flutter_application_1/VehicleModel.dart';
 
 import 'User.dart';
 
-class Register {  
+
+class Register {
+    
   Set<User> users = Set();
   Set<VehicleBrand> brands = Set();
   Set<VehicleModel> models = Set();
   Set<Vehicle> vehices = Set();
 
   String fileLocation = "[null]";
-
 
   // --- USER COLLECTION FUNCTIONS ---
   addUser(User input){
