@@ -1,11 +1,9 @@
 class User {
-  String userName = "";
-  String email = "";
-  String phoneNumber = "";
+  String username = "[no username]";
+  String email = "[no email]";
 
-  User (String userName, String email) {
-    this.userName = userName;
+  User (String username, String email) {
+    this.username = username;
     this.email = email;
   }
-
 }

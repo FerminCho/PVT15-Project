@@ -6,15 +6,16 @@ import 'User.dart';
 
 
 class Register {
-    
+
   Set<User> users = Set();
   Set<VehicleBrand> brands = Set();
   Set<VehicleModel> models = Set();
-  Set<Vehicle> vehices = Set();
+  Set<Vehicle> vehicles = Set();
 
   String fileLocation = "[null]";
 
   // --- USER COLLECTION FUNCTIONS ---
+
   addUser(User input){
     users.add(input);
   }
@@ -24,8 +25,9 @@ class Register {
   }
 
   // --- BRAND COLLECTION FUNCTIONS ----
-  addBrand() {
 
+  addBrand(VehicleBrand input) {
+    brands.add(input);
   }
 
   getBrand() {
@@ -33,8 +35,9 @@ class Register {
   }
 
   // --- MODEL COLLECTION FUNCTIONS ---
-  addModel() {
 
+  addModel(VehicleModel input) {
+    models.add(input);
   }
 
   getModel() {
@@ -42,8 +45,9 @@ class Register {
   }
 
   // --- VEHICLE COLLECTION FUNCTIONS ---
-  addVehicle() {
 
+  addVehicle(Vehicle input) {
+    vehicles.add(input);
   }
 
   getVehicle() {
@@ -51,6 +55,7 @@ class Register {
   }
 
   // --- FUNCTIONS FOR READING AND WRING DATA ---
+
   writeData() {
 
   }

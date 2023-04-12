@@ -2,7 +2,7 @@ import 'VehicleBrand.dart';
 import 'VehicleType.dart';
 
 class VehicleModel {
-  String name = "";
+  String name = "[no name]";
   VehicleBrand brand = new VehicleBrand("[no name]");
   var type = VehicleType.OTHER;
 
