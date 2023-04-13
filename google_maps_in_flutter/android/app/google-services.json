@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1035893600391",
+    "project_id": "pvt15-car-spotting",
+    "storage_bucket": "pvt15-car-spotting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035893600391:android:b0199a0b0235fe95f3c822",
+        "android_client_info": {
+          "package_name": "com.test.google_maps_in_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035893600391-fs8mueao8pa7f03evcm9isn868jo142f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOCARoRRaZuBo6Dhspq1yLzsKskEzoDWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035893600391-fs8mueao8pa7f03evcm9isn868jo142f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
