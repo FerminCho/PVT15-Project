@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() => runApp(const MyApp());
@@ -16,21 +17,34 @@ class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    var positions =  [1];
+     Map<String, dynamic> test = {'zero': 0, 'one':1};
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+  final docRef = db.collection("PVT 15").doc("Car location");
+    docRef.get().then(
+    (DocumentSnapshot doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      test = data;
+      // ...
+    },
+    onError: (e) => print("Error getting document: $e"),
+    );
+    
     var latlang = [59.334591, 18.063240];
     setState(() {
       _markers.clear();
-      for (var i in positions) {
+      test.forEach((k,v) {
         final marker = Marker(
-          markerId: MarkerId(i.toString()),
-          position: LatLng(latlang[0], latlang[1]),
+          markerId: MarkerId('${k}'),
+          position: LatLng(${v}),
           /*infoWindow: InfoWindow(
             title: office.name,
             snippet: office.address,
           ),*/
         );
         _markers[i.toString()] = marker;
-      }
+      });
     });
   }
 
