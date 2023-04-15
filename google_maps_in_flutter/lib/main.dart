@@ -31,13 +31,14 @@ class _MyAppState extends State<MyApp> {
     onError: (e) => print("Error getting document: $e"),
     );
     
-    var latlang = [59.334591, 18.063240];
+    //var latlang = [59.334591, 18.063240];
     setState(() {
       _markers.clear();
-      test.forEach((k,v) {
-        final marker = Marker(
-          markerId: MarkerId('${k}'),
-          position: LatLng(${v}),
+      test.forEach((k, v) {
+        var splitter = v.split(',');
+        var marker = Marker(
+          markerId: MarkerId(k),
+          position: LatLng(splitter[0], splitter[1]),
           /*infoWindow: InfoWindow(
             title: office.name,
             snippet: office.address,
