@@ -9,14 +9,14 @@ class StoreMarkeData{
 
 }
       
-      Future<String?> getLocationDataFromImage(String filePath) async {
-        String preciseLocation;
-        final exif = await Exif.fromPath(filePath);
-        final latLong = await exif.getLatLong();
-        await exif.close();
-        if (latLong != null) {
-          preciseLocation = latLong.latitude.toString() + "," + latLong.longitude.toString();
-          return preciseLocation;
-        }
-        return null;
-      }
+Future<String?> getLocationDataFromImage(String filePath) async {
+  String preciseLocation;
+  final exif = await Exif.fromPath(filePath);
+  final latLong = await exif.getLatLong();
+  await exif.close();
+  if (latLong != null) {
+    preciseLocation = latLong.latitude.toString() + "," + latLong.longitude.toString();
+    return preciseLocation;
+  }
+  return null;
+}
