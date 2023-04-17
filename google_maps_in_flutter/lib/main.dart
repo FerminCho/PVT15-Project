@@ -23,30 +23,29 @@ class _MyAppState extends State<MyApp> {
 
     FirebaseFirestore db = FirebaseFirestore.instance;
 
-  final docRef = db.collection("PVT 15").doc("Car location");
+  /*final docRef = db.collection("PVT 15").doc("Car location");
     docRef.get().then(
     (DocumentSnapshot doc) {
       data = doc.data() as Map<String, String>;
       // ...
     },
     onError: (e) => print("Error getting document: $e"),//change to log
-    );
+    );*/
     
-    //var latlang = [59.334591, 18.063240];
+    var latlang = [59.334591, 18.063240];
     setState(() {
       _markers.clear();
-      data.forEach((k, v) {
-        var splitter = v.split(',');
+        //var splitter = v.split(',');
         var marker = Marker(
-          markerId: MarkerId(k),
-          position: LatLng(double.parse(splitter[0]), double.parse(splitter[1])),
+          markerId: const MarkerId("1"),
+          //position: LatLng(double.parse(splitter[0]), double.parse(splitter[1])),
+          position: LatLng(latlang[0], latlang[1]),
           /*infoWindow: InfoWindow(
             title: office.name,
             snippet: office.address,
           ),*/
         );
-        _markers[k] = marker;
-      });
+        _markers["1"] = marker;
     });
   }
 
