@@ -41,6 +41,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+7
   cloud_firestore: ^4.5.1
   firebase_core: ^2.9.0
+  firebase_storage: ^11.1.0
   native_exif: ^0.4.1
   
 

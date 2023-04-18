@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:native_exif/native_exif.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +19,7 @@ class ImageHandler extends StatefulWidget {
 
 class CameraDemoState extends State<ImageHandler> {
   File? image;
+  FirebaseFirestore storageref = FirebaseStorage.instance.ref();
 
   Future getImage(ImageSource source) async {
     try {
