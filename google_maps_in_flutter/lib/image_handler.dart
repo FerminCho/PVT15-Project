@@ -9,29 +9,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:io';
 
-class ImageHandler {
-
-  Future<String?> getLocationDataFromImage(String filePath) async {
-    String preciseLocation;
-    final exif = await Exif.fromPath(filePath);
-    final latLong = await exif.getLatLong();
-    await exif.close();
-    if (latLong != null) {
-      preciseLocation = latLong.latitude.toString() + "," + latLong.longitude.toString();
-      return preciseLocation;
-    }
-    return null;
-  }
-}
-
-class CameraDemo extends StatefulWidget {
-  const CameraDemo({Key? key}) : super(key: key);
+class ImageHandler extends StatefulWidget {
+  const ImageHandler({Key? key}) : super(key: key);
 
   @override
-  State<CameraDemo> createState() => CameraDemoState();
+  State<ImageHandler> createState() => CameraDemoState();
 }
 
-class CameraDemoState extends State<CameraDemo> {
+class CameraDemoState extends State<ImageHandler> {
   File? image;
 
   Future getImage(ImageSource source) async {
@@ -63,6 +48,18 @@ class CameraDemoState extends State<CameraDemo> {
     final image = File('${directory.path}/$name');
 
     return File(imagePath).copy(image.path);
+  }
+
+  Future<String?> getLocationDataFromImage(String filePath) async {
+    String preciseLocation;
+    final exif = await Exif.fromPath(filePath);
+    final latLong = await exif.getLatLong();
+    await exif.close();
+    if (latLong != null) {
+      preciseLocation = latLong.latitude.toString() + "," + latLong.longitude.toString();
+      return preciseLocation;
+    }
+    return null;
   }
 
   @override
