@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'plate_recogniser/PlateData.dart';
+import 'plate_recogniser/PlateRecogniser.dart';
 
 void main() => runApp(const MyApp());
+
+PlateRecogniser plateRecogniser = new PlateRecogniser();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -19,8 +23,31 @@ class _MyAppState extends State<MyApp> {
     mapController = controller;
   }
 
+  late Future<PlateData> futurePlateData;
+
+  @override
+  void initState() {
+    super.initState();
+    futurePlateData = plateRecogniser.getPlateData();
+  }
+
   @override
   Widget build(BuildContext context) {
+
+  FutureBuilder<PlateData> (
+    future: futurePlateData,
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        return Text(snapshot.data!.value);
+      
+      } else if (snapshot.hasError) {
+        return Text('${snapshot.error}');
+      }
+      
+      return const CircularProgressIndicator();
+    },
+  );
+
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
