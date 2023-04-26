@@ -24,7 +24,7 @@ class CameraDemoState extends State<ImageHandler> {
 
   Future getImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: source);
+      final image = await ImagePicker().pickImage(source: source, imageQuality: 1);
       if (image == null) return;
 
       final imagePermanent = await saveFile(image.path);
@@ -49,6 +49,16 @@ class CameraDemoState extends State<ImageHandler> {
     final directory = await getApplicationDocumentsDirectory();
     final name = basename(imagePath);
     final image = File('${directory.path}/$name');
+
+    final imageRef = storageRef.child(name);
+    final imagePathRef = storageRef.child('map_images/$name');
+
+      try {
+    // Upload raw data.
+  	await imageRef.putFile(image);
+    } on firebase_core.FirebaseException catch (e) {
+      print('no');
+    }
 
     return File(imagePath).copy(image.path);
   }
