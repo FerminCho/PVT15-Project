@@ -3,10 +3,17 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_in_flutter/image_handler.dart'; 
 
-void main() => runApp(const MyApp());
-
+Future<void> main() async{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  runApp(const MyApp());
+} 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -15,6 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
   final Map<String, Marker> _markers = {};
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
@@ -62,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Maps Sample App'),
           elevation: 2,
         ),
-        body: GoogleMap(
+        body: /*GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
@@ -73,7 +81,7 @@ class _MyAppState extends State<MyApp> {
           northeast: const LatLng(59.448099, 18.179115),
           southwest: const LatLng(59.218005, 17.742408)
           ))
-        ),
+        ),*/
       ),
       
     );

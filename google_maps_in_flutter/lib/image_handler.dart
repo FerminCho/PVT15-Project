@@ -53,10 +53,10 @@ class CameraDemoState extends State<ImageHandler> {
     final imageRef = storageRef.child(name);
     final imagePathRef = storageRef.child('map_images/$name');
 
-      try {
+    try {
     // Upload raw data.
   	await imageRef.putFile(image);
-    } on firebase_core.FirebaseException catch (e) {
+    } on FirebaseException catch (e) {
       print('no');
     }
 
