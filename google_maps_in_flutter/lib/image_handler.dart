@@ -19,7 +19,8 @@ class ImageHandler extends StatefulWidget {
 
 class CameraDemoState extends State<ImageHandler> {
   File? image;
-  FirebaseFirestore storageref = FirebaseStorage.instance.ref();
+  final storageRef = FirebaseStorage.instance.ref();
+  final imageRef = storageRef()
 
   Future getImage(ImageSource source) async {
     try {
@@ -34,6 +35,16 @@ class CameraDemoState extends State<ImageHandler> {
     } on PlatformException catch (e) {
       print(e);
     }
+  }
+
+  Future saveImage(File imagefile){
+
+    
+    try {
+    await getImage().putFile(imagefile);
+  }  on firebase_core.FirebaseException catch (e) {
+  // ...
+  }
   }
 
   Image displayImage() {
