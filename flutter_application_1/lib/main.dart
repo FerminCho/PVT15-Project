@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'plate_recogniser/PlateData.dart';
-import 'plate_recogniser/PlateRecogniser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+
+ String picture = "/home/axel/Desktop/volvo_car.jpg";
+ String apiUri = "https://license-plate-detection.p.rapidapi.com/license-plate-detection";
 
 // Plate recogniser
 Future<PlateData> getPlateData() async {
@@ -44,13 +46,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    futurePlateData = getPlateData();
+    futurePlateData = getPlateData(); // Plate recogniser
   }
 
   @override
   Widget build(BuildContext context) {
 
-  FutureBuilder<PlateData> (
+  FutureBuilder<PlateData> (  // Plate recogniser
     future: futurePlateData,
     builder: (context, snapshot) {
       if (snapshot.hasData) {
