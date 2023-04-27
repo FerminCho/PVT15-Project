@@ -2,10 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'plate_recogniser/PlateData.dart';
 import 'plate_recogniser/PlateRecogniser.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
+
+// Plate recogniser
+Future<PlateData> getPlateData() async {
+  final response = await http.get(Uri.parse(apiUri));
+
+  if (response.statusCode == 200) {
+    return PlateData.fromJson(jsonDecode(response.body));
+  
+  } else {
+    throw Exception("Failed to load plate data.");
+  }
+}
+
+
 
 void main() => runApp(const MyApp());
-
-PlateRecogniser plateRecogniser = new PlateRecogniser();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -28,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    futurePlateData = plateRecogniser.getPlateData();
+    futurePlateData = getPlateData();
   }
 
   @override

@@ -28,22 +28,6 @@ Future<http.Response> getPlateData() {
       throw Exception("Failed to load plate data.");
     }
   }
-
-  FutureBuilder<PlateData> (
-    future: futurePlateData,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        return Text(snapshot.data!.value);
-      
-      } else if (snapshot.hasError) {
-        return Text('${snapshot.error}');
-      }
-      
-      return const CircularProgressIndicator();
-    },
-  )
-
-
   
 }
 
