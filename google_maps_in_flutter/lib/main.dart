@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Maps Sample App'),
           elevation: 2,
         ),
-        body: /*GoogleMap(
+        body: GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
           northeast: const LatLng(59.448099, 18.179115),
           southwest: const LatLng(59.218005, 17.742408)
           ))
-        ),*/
+        ),
       ),
       
     );
