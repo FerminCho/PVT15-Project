@@ -1,78 +1,92 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_in_flutter/pages/home_page.dart';
+import 'package:google_maps_in_flutter/pages/camera_page.dart';
+import 'package:google_maps_in_flutter/pages/map_page.dart';
+import 'package:google_maps_in_flutter/pages/achievements_page.dart';
+import 'package:google_maps_in_flutter/pages/profile_page.dart';
+import 'package:google_maps_in_flutter/pages/settings_page.dart';
 
-void main() => runApp(HomeScreen());
+void main() => runApp(const HomeScreen());
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final Map<String, Marker> _markers = {};
-  final LatLng _center = const LatLng(59.334591, 18.063240);
-
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    Map<String, String> data = {};
-
-    FirebaseFirestore db = FirebaseFirestore.instance;
-
-    /*final docRef = db.collection("PVT 15").doc("Car location");
-    docRef.get().then(
-    (DocumentSnapshot doc) {
-      data = doc.data() as Map<String, String>;
-      // ...
-    },
-    onError: (e) => print("Error getting document: $e"),//change to log
-    );*/
-
-    var latlang = [59.334591, 18.063240];
-    setState(() {
-      _markers.clear();
-      //var splitter = v.split(',');
-      var marker = Marker(
-        markerId: const MarkerId("1"),
-        //position: LatLng(double.parse(splitter[0]), double.parse(splitter[1])),
-        position: LatLng(latlang[0], latlang[1]),
-        /*infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),*/
-      );
-      _markers["1"] = marker;
-    });
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorSchemeSeed: Colors.green[700],
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orangeAccent),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          elevation: 2,
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentPageIndex = 0;
+  final screens = [
+    const MapPage(),
+    const AchievementsPage(),
+    const CameraPage(),
+    const ProfilePage(),
+    const SettingsPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          backgroundColor: Colors.white,
+          indicatorColor: Colors.orange[200],
         ),
-        body: GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 11.0,
+        child: NavigationBar(
+          animationDuration: const Duration(seconds: 1),
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          selectedIndex: currentPageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Home',
             ),
-            markers: _markers.values.toSet(),
-            cameraTargetBounds: CameraTargetBounds(LatLngBounds(
-                northeast: const LatLng(59.448099, 18.179115),
-                southwest: const LatLng(59.218005, 17.742408)))),
+            NavigationDestination(
+              icon: Icon(Icons.local_activity_outlined),
+              selectedIcon: Icon(Icons.local_activity),
+              label: 'Achievements',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.add_box_outlined),
+              selectedIcon: Icon(Icons.add_box),
+              label: 'Add photo',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.person_outlined),
+              selectedIcon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings_outlined),
+              selectedIcon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+        ),
       ),
+      body: screens[currentPageIndex],
     );
   }
 }

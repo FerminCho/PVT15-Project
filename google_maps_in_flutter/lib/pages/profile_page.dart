@@ -18,33 +18,8 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       home: Scaffold(
         body: Center(
-          child: ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return PhotoPage();
-                }));
-              },
-              icon: Icon(Icons.add_a_photo_rounded),
-              label: Text('Test')),
+          child: Text('Profile page'),
         ),
-      ),
-    );
-  }
-}
-
-class PhotoPage extends StatelessWidget {
-  const PhotoPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.backpack_sharp),
-            label: Text('Go back')),
       ),
     );
   }
