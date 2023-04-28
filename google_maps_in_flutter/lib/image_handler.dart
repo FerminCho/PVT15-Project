@@ -20,6 +20,7 @@ class ImageHandler extends StatefulWidget {
 class CameraDemoState extends State<ImageHandler> {
   File? image;
   final storageRef = FirebaseStorage.instance.ref();
+  final db = FirebaseFirestore.instance;
 
 
   Future getImage(ImageSource source) async {
@@ -50,15 +51,22 @@ class CameraDemoState extends State<ImageHandler> {
     final name = basename(imagePath);
     final image = File('${directory.path}/$name');
 
-    final imageRef = storageRef.child(name);
+    //final imageRef = storageRef.child(name);
     final imagePathRef = storageRef.child('map_images/$name');
 
     try {
-    // Upload raw data.
-  	await imageRef.putFile(image);
+  	await imagePathRef.putFile(image);
     } on FirebaseException catch (e) {
       print('no');
     }
+    String imageUrl = imagePathRef.getDownloadURL() as String;
+    Image.network(imageUrl);//fetches image fromd database
+
+    db
+    .collection("cities")
+    .doc("BJ")
+    .set(data, SetOptions(merge: true))
+    .onError((e, _) => print("Error writing document: $e"));
 
     return File(imagePath).copy(image.path);
   }
