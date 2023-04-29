@@ -17,4 +17,12 @@ class BadgeHandler{
     );
 
   }
+  bool markInBounds(){
+    double lat = 59;
+    double lang = 18;
+    if(lat > 59.218005 && lat < 59.448099 && lang > 17.742408 && lang < 18.179115){
+      return true;
+    }
+    return false;
+  }
 }
