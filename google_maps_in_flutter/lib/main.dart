@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'dart:typed_data';
+import 'package:network_image_to_byte/network_image_to_byte.dart'
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,6 +20,7 @@ class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
+    final Uint8List customMarker= await networkImageToByte(<image_url>);
      Map<String, String> data = {};
 
     FirebaseFirestore db = FirebaseFirestore.instance;
