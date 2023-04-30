@@ -44,6 +44,7 @@ class _MyAppState extends State<MyApp> {
             title: office.name,
             snippet: office.address,
           ),*/
+          icon: BitmapDescriptor.fromBytes(byteData)
         );
         _markers["1"] = marker;
     });
