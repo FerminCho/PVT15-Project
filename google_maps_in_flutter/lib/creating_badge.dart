@@ -17,10 +17,8 @@ class BadgeHandler{
 
       ),
     );
-    download
     return badge;
     
-
   }
   bool markInBounds(){
     double lat = 59;
