@@ -1,6 +1,6 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:network_image_to_byte/network_image_to_byte.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,9 +20,7 @@ class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final image = Image.network(
-        'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-        height: 300);
+    final image = File('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
     Uint8List customMarker = await image.readAsBytes();
 
     Map<String, String> data = {};
@@ -50,7 +48,7 @@ class _MyAppState extends State<MyApp> {
             title: office.name,
             snippet: office.address,
           ),*/
-          icon: BitmapDescriptor.fromBytes(image)
+          icon: BitmapDescriptor.fromBytes(customMarker)
         );
         _markers["1"] = marker;
     });
