@@ -1,10 +1,16 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:badges/src/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:badges/badges.dart' as badges;
+
+import 'package:flutter/services.dart';
+
+import 'creating_badge.dart';
 
 void main() => runApp(const MyApp());
 
@@ -20,8 +26,14 @@ class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final image = File('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
-    Uint8List customMarker = await image.readAsBytes();
+    Image image = Image.network('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+    BadgeHandler badge = BadgeHandler();
+    badges.Badge byteData = badge.createBadge(image);
+    /*Uint8List bytes = (await NetworkAssetBundle(Uri.parse('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'))
+            .load('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'))
+            .buffer
+            .asUint8List();*/
+    
 
     Map<String, String> data = {};
 
@@ -48,7 +60,7 @@ class _MyAppState extends State<MyApp> {
             title: office.name,
             snippet: office.address,
           ),*/
-          icon: BitmapDescriptor.fromBytes(customMarker)
+          icon: BitmapDescriptor.fromBytes(byteData)
         );
         _markers["1"] = marker;
     });

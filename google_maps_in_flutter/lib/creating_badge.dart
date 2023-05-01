@@ -1,9 +1,11 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
+import 'package:custom_marker/marker_icon.dart';
+
 class BadgeHandler{
-  void createBadge(image){
-    badges.Badge(
+  badges.Badge createBadge(image){
+    var badge = badges.Badge(
       showBadge: true,
       onTap:() {},
       badgeContent: Image(image: image),
@@ -15,6 +17,9 @@ class BadgeHandler{
 
       ),
     );
+    download
+    return badge;
+    
 
   }
   bool markInBounds(){
