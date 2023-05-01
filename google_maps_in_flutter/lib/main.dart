@@ -20,7 +20,8 @@ class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final Uint8List customMarker = await networkImageToByte('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+    final customMarker = 
+    final image = ('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
     Map<String, String> data = {};
 
     //FirebaseFirestore db = FirebaseFirestore.instance;
