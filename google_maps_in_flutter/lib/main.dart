@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
-  Map<String, Marker> markers = {};
+  Map<String, Marker> _markers = {};
 
     bool markInBounds(){
     double lat = 59;
@@ -65,9 +65,9 @@ class _MyAppState extends State<MyApp> {
         );
     
       setState(() {
-        markers.clear();
+        _markers.clear();
         //var splitter = v.split(',');
-        markers["1"] = marker;
+        _markers["1"] = marker;
     });
     Future<Position> getUserCurrentLocation() async {
     await Geolocator.requestPermission().then((value){
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
       await Geolocator.requestPermission();
       print("ERROR"+error.toString());
     });
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(); 
   }
   }
 
@@ -97,13 +97,43 @@ class _MyAppState extends State<MyApp> {
             target: _center,
             zoom: 11.0,
           ),
-          markers: markers.values.toSet(),
+          markers: _markers.values.toSet(),
           cameraTargetBounds: CameraTargetBounds(LatLngBounds(
           northeast: const LatLng(59.448099, 18.179115),
           southwest: const LatLng(59.218005, 17.742408)
-          ))
-          myLocationButtonEnabled:
+          )),
+          myLocationEnabled: true,
         ),
+              floatingActionButton: FloatingActionButton(
+        onPressed: () async{
+          getUserCurrentLocation().then((value) async {
+            print(value.latitude.toString() +" "+value.longitude.toString());
+ 
+            // marker added for current users location
+            _markers.add(
+                Marker(
+                  markerId: MarkerId("2"),
+                  position: LatLng(value.latitude, value.longitude),
+                  infoWindow: InfoWindow(
+                    title: 'My Current Location',
+                  ),
+                )
+            );
+ 
+            // specified current users location
+            CameraPosition cameraPosition = new CameraPosition(
+              target: LatLng(value.latitude, value.longitude),
+              zoom: 14,
+            );
+ 
+            final GoogleMapController controller = await _controller.future;
+            controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+            setState(() {
+            });
+          });
+        },
+        child: Icon(Icons.local_activity),
+      ),
       ),
       
     );
