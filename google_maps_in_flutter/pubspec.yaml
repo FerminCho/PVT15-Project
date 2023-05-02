@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^2.9.0
   native_exif: ^0.4.1
   custom_marker: ^1.0.0
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

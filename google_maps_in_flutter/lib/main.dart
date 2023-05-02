@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:badges/src/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:custom_marker/marker_icon.dart';
@@ -68,6 +69,14 @@ class _MyAppState extends State<MyApp> {
         //var splitter = v.split(',');
         markers["1"] = marker;
     });
+    Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission().then((value){
+    }).onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      print("ERROR"+error.toString());
+    });
+    return await Geolocator.getCurrentPosition();
+  }
   }
 
   @override
@@ -93,6 +102,7 @@ class _MyAppState extends State<MyApp> {
           northeast: const LatLng(59.448099, 18.179115),
           southwest: const LatLng(59.218005, 17.742408)
           ))
+          myLocationButtonEnabled:
         ),
       ),
       
