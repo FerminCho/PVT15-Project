@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:badges/src/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -24,6 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final LatLng _center = const LatLng(59.334591, 	18.063240);
   Map<String, Marker> _markers = {};
+  Completer<GoogleMapController> _controller = Completer();
 
     bool markInBounds(){
     double lat = 59;
@@ -34,7 +34,16 @@ class _MyAppState extends State<MyApp> {
     return false;
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+    Future<Position> getUserCurrentLocation() async {
+    await Geolocator.requestPermission().then((value){
+    }).onError((error, stackTrace) async {
+      await Geolocator.requestPermission();
+      print("ERROR"+error.toString());
+    });
+    return await Geolocator.getCurrentPosition(); 
+  }
+
+  Future<void> _onMapCreated() async {
     Map<String, String> data = {};
 
     //FirebaseFirestore db = FirebaseFirestore.instance;
@@ -69,14 +78,6 @@ class _MyAppState extends State<MyApp> {
         //var splitter = v.split(',');
         _markers["1"] = marker;
     });
-    Future<Position> getUserCurrentLocation() async {
-    await Geolocator.requestPermission().then((value){
-    }).onError((error, stackTrace) async {
-      await Geolocator.requestPermission();
-      print("ERROR"+error.toString());
-    });
-    return await Geolocator.getCurrentPosition(); 
-  }
   }
 
   @override
@@ -92,7 +93,9 @@ class _MyAppState extends State<MyApp> {
           elevation: 2,
         ),
         body: GoogleMap(
-          onMapCreated: _onMapCreated,
+          onMapCreated: (GoogleMapController controller){
+                _controller.complete(controller);
+            },
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
@@ -104,13 +107,13 @@ class _MyAppState extends State<MyApp> {
           )),
           myLocationEnabled: true,
         ),
-              floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
         onPressed: () async{
           getUserCurrentLocation().then((value) async {
             print(value.latitude.toString() +" "+value.longitude.toString());
  
             // marker added for current users location
-            _markers.add(
+            _markers['2'] =(
                 Marker(
                   markerId: MarkerId("2"),
                   position: LatLng(value.latitude, value.longitude),
