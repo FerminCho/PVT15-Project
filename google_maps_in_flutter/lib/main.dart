@@ -43,20 +43,10 @@ class _MyAppState extends State<MyApp> {
     return await Geolocator.getCurrentPosition(); 
   }
 
-  Future<void> _onMapCreated() async {
+  Future<void> _onMapCreated(GoogleMapController controller) async {
     Map<String, String> data = {};
 
-    //FirebaseFirestore db = FirebaseFirestore.instance;
-
-  /*final docRef = db.collection("PVT 15").doc("Car location");
-    docRef.get().then(
-    (DocumentSnapshot doc) {
-      data = doc.data() as Map<String, String>;
-      // ...
-    },
-    onError: (e) => print("Error getting document: $e"),//change to log
-    );*/
-        var latlang = [59.334591, 18.063240];
+    var latlang = [59.334591, 18.063240];
           var marker = Marker(
           markerId: const MarkerId("1"),
           //position: LatLng(double.parse(splitter[0]), double.parse(splitter[1])),
@@ -72,9 +62,21 @@ class _MyAppState extends State<MyApp> {
             borderColor: Colors.black,
             borderSize: 15),
         );
+
+    //FirebaseFirestore db = FirebaseFirestore.instance;
+
+  /*final docRef = db.collection("PVT 15").doc("Car location");
+    docRef.get().then(
+    (DocumentSnapshot doc) {
+      data = doc.data() as Map<String, String>;
+      // ...
+    },
+    onError: (e) => print("Error getting document: $e"),//change to log
+    );*/
+        
     
       setState(() {
-        _markers.clear();
+        //_markers.clear();
         //var splitter = v.split(',');
         _markers["1"] = marker;
     });
@@ -93,9 +95,7 @@ class _MyAppState extends State<MyApp> {
           elevation: 2,
         ),
         body: GoogleMap(
-          onMapCreated: (GoogleMapController controller){
-                _controller.complete(controller);
-            },
+          onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
             zoom: 11.0,
@@ -113,15 +113,13 @@ class _MyAppState extends State<MyApp> {
             print(value.latitude.toString() +" "+value.longitude.toString());
  
             // marker added for current users location
-            _markers['2'] =(
-                Marker(
+            _markers['2'] = Marker(
                   markerId: MarkerId("2"),
                   position: LatLng(value.latitude, value.longitude),
                   infoWindow: InfoWindow(
                     title: 'My Current Location',
                   ),
-                )
-            );
+                );
  
             // specified current users location
             CameraPosition cameraPosition = new CameraPosition(
